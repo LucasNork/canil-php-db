@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/formPet.css">
+    <title>Document</title>
+</head>
+<body>
+    
+        <div class="container">
+            <div class="container-image">
+                <img src="./images/cat.png" alt="">
+            </div>
+            <div class="container-form">
+                <h2>Anunciar Pet</h2>
+                <form action="../controllers/rota.php?acao=salvarPet" method="post" enctype="multipart/form-data">
+                    <label for="">
+                        <input type="text" name="raca" placeholder="Raça">
+                    </label>
+                    <label for="">
+                        <input type="text" name="cor" placeholder="Cor">
+                    </label>
+                    <label class="radidus" for="masc">
+                        <input type="radio" name="sexo" id="masc" value="Macho">Masculino
+                    </label>
+                    <label class="radidus" for="fem">
+                        <input type="radio" name="sexo" id="fem" value="Fêmea">Feminino
+                    </label>
+                    <label id="categoria" for="cat">
+                        <select name="categoria" id="cat">
+                            <option >Category</option>
+                            <option value="cachorro">Cachorro</option>
+                            <option value="gato">Gato</option>
+                            <option value="peixe">Peixe</option>
+                        </select>
+                    </label>
+                    <label class="" for="">
+                        <input type="date" name="dataNascimento" id="">
+                    </label>
+                    <label for="" class="inputFile">
+                        <span class="inputFile-custom"></span>
+                        <input type="file" name="imagem[]" id="file" accept="image/png, image/jpeg" multiple>
+                    </label>
+                    <div class="buton">
+                        <button>Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+   
+</body>
+</html>

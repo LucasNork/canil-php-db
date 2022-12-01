@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/formUsuario.css">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="container-image">
+      <img src="./images/usuario.png" alt="">
+    </div>
+    <div class="container-form">
+      <div class="testar">
+        <h2>Login</h2>
+        <form action="../controllers/rota.php?acao=autenticar" method="post" enctype="multipart/form-data">
+          <label for="">
+            <input type="text" name="email" placeholder="Email">
+          </label>
+          <label for="">
+            <input type="text" name="senha" placeholder="Senha">
+          </label>
+          <div class="buton">
+            <button>Enviar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
