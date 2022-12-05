@@ -120,39 +120,44 @@
 
 
       break;
-      case 'listarTodos':
-        
+    case 'listarTodos':
+      
+      session_start();
+      if ($_SESSION['listagemGeral']) {
+        //session_destroy();
+        unset($_SESSION['listagemGeral']);
+        header('Location: ../views/index.php');
+      } else {
+        $lista = AnuncioController::listarTodos();
+        $_SESSION['listagemGeral'] = $lista;
+        header('Location: ../views/index.php');
+      }
+      break;
+    case 'mostrarAnuncio':
+      $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
+
+      $anuncio = AnuncioController::anuncioPorId($id);
+      if ($anuncio !== false) {
         session_start();
-        if ($_SESSION['listagemGeral']) {
-          //session_destroy();
-          unset($_SESSION['listagemGeral']);
-          header('Location: ../views/index.php');
-        } else {
-          $lista = AnuncioController::listarTodos();
-          $_SESSION['listagemGeral'] = $lista;
-          header('Location: ../views/index.php');
-        }
-        break;
-      case 'mostrarAnuncio':
-        $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
-
-        $anuncio = AnuncioController::anuncioPorId($id);
-        if ($anuncio !== false) {
-          session_start();
-          $_SESSION['anuncioPorId'] = $anuncio;
-        }
+        $_SESSION['anuncioPorId'] = $anuncio;
+      }
 
 
-        header('Location: ../views/paginaTransacao.php?anuncio='.$id);
-        break;
-        case 'deslogar':
-        
-          session_start();
-          session_destroy();
-  
-  
-          header('Location: ../views/index.php');
-          break;
+      header('Location: ../views/paginaTransacao.php?anuncio='.$id);
+      break;
+    case 'deslogar':
+    
+      session_start();
+      session_destroy();
+      header('Location: ../views/index.php');
+      break;
+    case 'adotarPet':
+      session_start();
+      $anuncio = $_SESSION['anuncioPorId'];
+      $usuario = $_SESSION['usuario'];
+
+      
+      break;
     default:
       # code...
       break;

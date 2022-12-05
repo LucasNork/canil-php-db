@@ -24,7 +24,13 @@ label {
     align-items: center;
     justify-content: center;
 }
-label input[type=text] {
+label input[type=text]{
+    width: 100%;
+    border: 0px;
+    border-radius: 12px;
+    padding: 12px;
+}
+label input[type=password] {
     width: 100%;
     border: 0px;
     border-radius: 12px;

@@ -44,14 +44,12 @@
             <li class=""><a href="../controllers/rota.php?acao=listarCategoria&categoria=peixe">Peixes</a></li>
         </ul>
     </nav>
-    <!-- <section class="banner" style="background-image: url('images/allanimals.jpg')">Todos os animais</section> -->
     <?php
         echo '<div class="container list">';
         if (isset($_SESSION['listagemGeral'])) {
             $anuncios = $_SESSION['listagemGeral'];
             foreach ($anuncios as $resultado) {
 
-                //----------------------------------------------------------------------------------------------------------------------
                 $imagemCompleta = $resultado->getPet()->getImagem()[0]->getCaminho() . $resultado->getPet()->getImagem()[0]->getNome();
 
                 echo '

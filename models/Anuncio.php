@@ -4,6 +4,7 @@
         private $id;
         private $pet;
         private $usuario;
+        private $status = 1;
 
         public function setId ($id) {
             $this->id = $id;
@@ -23,5 +24,11 @@
         }
         public function setUsuario ($usuario) {
             $this->usuario = $usuario;
+        }
+        public function getStatus () {
+            return $this->status;
+        }
+        public function setStatus ($status) {
+            $this->status = $status;
         }
     }
