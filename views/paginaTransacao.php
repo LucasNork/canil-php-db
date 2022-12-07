@@ -2,6 +2,8 @@
   require_once '../models/Pet.php';
   require_once '../models/Anuncio.php';
   require_once '../models/Imagem.php';
+  require_once '../models/Usuario.php';
+  require_once '../models/Transacao.php';
   session_start();
   if(!isset($_SESSION['usuario'])){
     header('Location: ../views/index.php');
@@ -50,13 +52,40 @@
             </div>
           ';
       echo'</div>';
-      }
+    }
+
+    $usuario = $_SESSION['usuario'];
+
+    if ($usuario->id == $anuncio->getUsuario()->getId()) {
+      echo'
+          <div class="contain">
+            <a href="../controllers/rota.php?acao=verificarTransacoes&anuncio='.$anuncio->getId().'" style="text-decoration: none; color: #000;background: #102581;padding: 18px;">
+              Verificar Transações
+            </a>
+          </div>
+        ';
+    }
+
+      // echo'
+      //   <div class="contain">
+      //     <a href="../controllers/rota.php?acao=finalizarPedido" style="text-decoration: none; color: #000;background: #102581;padding: 18px;">
+      //       Finalizar doação
+      //     </a>
+      //   </div>
+      // ';
+
+    if ($usuario->id !== $anuncio->getUsuario()->getId()) {
+      echo'
+        <div class="contain">
+          <a href="../controllers/rota.php?acao=adotarPet" style="text-decoration: none; color: #000;background: #102581;padding: 18px;">
+            Adotar
+          </a>
+        </div>
+      ';
+    }
+
   ?>
-  <div class="contain">
-    <a href="../controllers/rota.php?acao=adotarPet" style="text-decoration: none; color: #000;background: #102581;padding: 18px;">
-      Adotar
-    </a>
-  </div>
+  
 
 </body>
 

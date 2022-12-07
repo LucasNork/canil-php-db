@@ -4,9 +4,11 @@
   require_once '../models/Usuario.php';
   require_once '../models/Anuncio.php';
   require_once '../models/Imagem.php';
+  require_once '../models/Transacao.php';
   require_once '../DAOs/ImagemDAO.php';
   require_once './AnuncioController.php';
   require_once './UsuarioControlador.php';
+  require_once './TransacaoController.php';
 
   $acao = $_GET['acao'];
 
@@ -154,9 +156,28 @@
     case 'adotarPet':
       session_start();
       $anuncio = $_SESSION['anuncioPorId'];
-      $usuario = $_SESSION['usuario'];
+      $usuarioComprador = $_SESSION['usuario'];
 
-      
+      $transacao = new Transacao;
+      $transacao->setIdAnuncio($anuncio->getId());
+      $transacao->setIdComprador($usuarioComprador->id);
+
+
+      if (isset($_SESSION['transacao']) !== $transacao) {
+        try {
+          TransacaoController::iniciarTransacao($transacao);
+          $_SESSION['transacao'] = $transacao;
+        } catch (PDOException $erro) {
+          throw $erro;
+        }
+
+      }
+      header('Location: ../views/index.php');
+      // redirect to sucess page or fail page
+      break;
+    case 'verificarTransacoes':
+      $idAnuncio = $id = filter_input(INPUT_GET, 'anuncio', FILTER_SANITIZE_SPECIAL_CHARS);
+      echo $idAnuncio;
       break;
     default:
       # code...
