@@ -22,7 +22,6 @@
 
 
       $numeroDeImagens = count($_FILES['imagem']['name']);
-      echo $numeroDeImagens;
       $imagens = [];
 
       if (isset($_FILES['imagem'])) {
@@ -67,6 +66,7 @@
 
       try {
         AnuncioController::salvar($anuncio);
+        header('Location: ../views/index.php');
       } catch (PDOException $th) {
         throw $th;
       }
@@ -122,26 +122,31 @@
 
 
       break;
-    case 'listarTodos':
-      
+  case 'listarTodos':
+      $categoria = filter_input(INPUT_GET, 'categoria', FILTER_SANITIZE_SPECIAL_CHARS);
       session_start();
-      if ($_SESSION['listagemGeral']) {
-        //session_destroy();
-        unset($_SESSION['listagemGeral']);
-        header('Location: ../views/index.php');
+      $lista;
+      if ($categoria !== NULL) {
+        $lista = AnuncioController::anuncioPorCategoria($categoria);
       } else {
         $lista = AnuncioController::listarTodos();
-        $_SESSION['listagemGeral'] = $lista;
-        header('Location: ../views/index.php');
       }
+      
+      
+      
+      $_SESSION['listagemGeral'] = $lista;
+      header('Location: ../views/index.php');
       break;
+
     case 'mostrarAnuncio':
       $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
 
       $anuncio = AnuncioController::anuncioPorId($id);
+      $transacoes = TransacaoController::transacaoPorId($id);
       if ($anuncio !== false) {
         session_start();
         $_SESSION['anuncioPorId'] = $anuncio;
+        $_SESSION['transacoes'] = $transacoes;
       }
 
 
@@ -160,7 +165,7 @@
 
       $transacao = new Transacao;
       $transacao->setIdAnuncio($anuncio->getId());
-      $transacao->setIdComprador($usuarioComprador->id);
+      $transacao->setComprador($usuarioComprador->id);
 
 
       if (isset($_SESSION['transacao']) !== $transacao) {
@@ -175,9 +180,10 @@
       header('Location: ../views/index.php');
       // redirect to sucess page or fail page
       break;
-    case 'verificarTransacoes':
-      $idAnuncio = $id = filter_input(INPUT_GET, 'anuncio', FILTER_SANITIZE_SPECIAL_CHARS);
-      echo $idAnuncio;
+    case 'finalizarTransacao':
+      $idAnuncio = filter_input(INPUT_GET, 'anuncio', FILTER_SANITIZE_SPECIAL_CHARS);
+      AnuncioController::finalizarAnuncio($idAnuncio);
+      header('Location: ../views/index.php');
       break;
     default:
       # code...

@@ -55,30 +55,40 @@
     }
 
     $usuario = $_SESSION['usuario'];
+    $transacoes = $_SESSION['transacoes'];
 
     if ($usuario->id == $anuncio->getUsuario()->getId()) {
-      echo'
-          <div class="contain">
-            <a href="../controllers/rota.php?acao=verificarTransacoes&anuncio='.$anuncio->getId().'" style="text-decoration: none; color: #000;background: #102581;padding: 18px;">
-              Verificar Transações
-            </a>
-          </div>
-        ';
+      if ($transacoes == false) {
+        echo '<h2>Não há solicitações! </h2>';
+      } else {
+        echo '<h2>Solicitações </h2>';
+        echo'<div class="container list">';
+        foreach ($transacoes as $transacao) {
+          echo'<div class="item">
+                <div class="item--name">Nome: ' . $transacao->getComprador()->getNome() . '</div>
+                <div class="item--name">Telefone: ' . $transacao->getComprador()->getTelefone() . '</div>
+                <div class="item--name">Data do Pedido: ' . $transacao->getDataInicio() . '</div>
+                <div class="item--name">
+                  <a href="../controllers/rota.php?acao=finalizarTransacao&anuncio='.$transacao->getIdAnuncio().'">
+                    Finalizar doação >>
+                  </a>
+                </div>
+                
+              </div>
+            ';
+
+        }
+        echo'</div>';
+      }
     }
 
-      // echo'
-      //   <div class="contain">
-      //     <a href="../controllers/rota.php?acao=finalizarPedido" style="text-decoration: none; color: #000;background: #102581;padding: 18px;">
-      //       Finalizar doação
-      //     </a>
-      //   </div>
-      // ';
+
 
     if ($usuario->id !== $anuncio->getUsuario()->getId()) {
       echo'
         <div class="contain">
           <a href="../controllers/rota.php?acao=adotarPet" style="text-decoration: none; color: #000;background: #102581;padding: 18px;">
-            Adotar
+            <p style="color: #fff;">Adotar</p>
           </a>
         </div>
       ';

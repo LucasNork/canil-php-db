@@ -3,7 +3,7 @@
 class Transacao {
     private $id;
     private $id_anuncio;
-    private $id_comprador;
+    private $comprador;
     private $data_inicio;
     private $data_finalizacao;
     private $transacao_status;
@@ -20,11 +20,11 @@ class Transacao {
     public function getIdAnuncio () {
         return $this->id_anuncio;
     }
-    public function setIdComprador($id_comprador) {
-        $this->id_comprador = $id_comprador;
+    public function setComprador($comprador) {
+        $this->comprador = $comprador;
     }
-    public function getIdComprador () {
-        return $this->id_comprador;
+    public function getComprador () {
+        return $this->comprador;
     }
     public function setDataInicio($data_inicio) {
         $this->data_inicio = $data_inicio;

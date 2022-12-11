@@ -1,3 +1,14 @@
+<?php
+require_once '../models/Usuario.php';
+require_once '../models/Pet.php';
+require_once '../models/Anuncio.php';
+require_once '../models/Imagem.php';
+session_start();
+ if (!isset($_SESSION['listagemGeral'])) {
+    header('Location: ../controllers/rota.php?acao=listarTodos');
+ }
+?>
+
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -15,14 +26,13 @@
         <div class="container">
             <a href="">PetDevShop</a>
             <?php
-                require_once '../models/Usuario.php';
-                require_once '../models/Pet.php';
-                require_once '../models/Anuncio.php';
-                require_once '../models/Imagem.php';
-                session_start();
+                
                 if(isset($_SESSION['usuario'])) {
                     echo'
                         <a href="../controllers/rota.php?acao=deslogar" class="login" style="font-size: 16px; margin-top: 12px;">Deslogar</a>
+                    ';
+                    echo'
+                        <a href="./formCadastrarPet.html" class="login" style="font-size: 16px; margin-top: 12px;">Anunciar Pet</a>
                     ';
                 } else {
                     echo'
@@ -39,9 +49,9 @@
     <nav>
         <ul>
             <li class=""><a href="../controllers/rota.php?acao=listarTodos">Todos</a></li>
-            <li class=""><a href="../controllers/rota.php?acao=listarCategoria&categoria=cachorro">Cachorros</a></li>
-            <li class=""><a href="../controllers/rota.php?acao=listarCategoria&categoria=gato">Gatos</a></li>
-            <li class=""><a href="../controllers/rota.php?acao=listarCategoria&categoria=peixe">Peixes</a></li>
+            <li class=""><a href="../controllers/rota.php?acao=listarTodos&categoria=cachorro">Cachorros</a></li>
+            <li class=""><a href="../controllers/rota.php?acao=listarTodos&categoria=gato">Gatos</a></li>
+            <li class=""><a href="../controllers/rota.php?acao=listarTodos&categoria=peixe">Peixes</a></li>
         </ul>
     </nav>
     <?php
@@ -73,3 +83,6 @@
 </body>
 
 </html>
+<?php
+    unset($_SESSION['listagemGeral']);
+?>

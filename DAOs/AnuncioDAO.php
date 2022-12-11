@@ -101,7 +101,7 @@ class AnuncioDAO
       $conexao = new PDO('mysql:host=localhost;dbname=canil_php', "root", "");
       $conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-      $sql = "SELECT anuncio.id AS anuncio_id, anuncio.id_user , anuncio.id_pet AS forgery_pet, pet.* FROM anuncio INNER JOIN pet ON anuncio.id_pet = pet.id AND pet.categoria = ?";
+      $sql = "SELECT anuncio.id AS anuncio_id, anuncio.id_user , anuncio.id_pet AS forgery_pet, pet.* FROM anuncio INNER JOIN pet ON anuncio.id_pet = pet.id AND pet.categoria = ? AND anuncio.anuncio_status = 1";
       $stmt = $conexao->prepare($sql);
       $stmt->bindValue(1, $categoria);
       $stmt->execute();
@@ -129,6 +129,24 @@ class AnuncioDAO
       }
 
       return $listaDeAnuncios;
+    } catch (PDOException $th) {
+      throw $th;
+    }
+  }
+
+  function finalizarAnuncio ($id)
+  {
+    try {
+      $conexao = new PDO('mysql:host=localhost;dbname=canil_php', "root", "");
+      $conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+      $sql = "UPDATE anuncio SET anuncio_status = 0 WHERE id = ?";
+      $stmt = $conexao->prepare($sql);
+      $stmt->bindValue(1, $id);
+      $stmt->execute();
+      $transacaoDAO = new TransacaoDAO;
+      $transacaoDAO->finalizarTransacao($id);
+      
     } catch (PDOException $th) {
       throw $th;
     }

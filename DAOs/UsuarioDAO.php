@@ -41,4 +41,29 @@
                 throw $erro;
             }
         }
+
+        public function usuarioPorId ($id) {
+            try {
+                $conexao = new PDO('mysql:host=localhost;dbname=canil_php', "root", "");
+                $conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                $sql = "SELECT * FROM usuario WHERE id = ?";
+                $stmt = $conexao->prepare($sql);
+                $stmt->bindValue(1, $id);
+                $stmt->execute();
+
+                while ($usuarioDoBanco = $stmt->fetch(PDO::FETCH_OBJ)) {
+                    $usuario = new Usuario;
+                    $usuario->setId($usuarioDoBanco->id);
+                    $usuario->setNome($usuarioDoBanco->nome);
+                    $usuario->setTelefone($usuarioDoBanco->telefone);
+                };
+
+                return $usuario;
+
+
+            } catch (PDOException $erro ) {
+                throw $erro;
+            }
+        }
     }

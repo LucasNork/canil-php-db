@@ -15,7 +15,7 @@ class TransacaoController {
   public static function transacaoPorId($id) {
     try {
       $transacaoDAO = new TransacaoDAO;
-      $transacaoDAO->transacaoPorId($id);
+      return $transacaoDAO->transacaoPorId($id);
     } catch (PDOException $erro) {
       throw $erro;
     }

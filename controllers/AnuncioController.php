@@ -3,6 +3,7 @@
   require_once '../DAOs/AnuncioDAO.php';
   require_once '../models/Pet.php';
   require_once '../models/Imagem.php';
+  require_once '../DAOs/TransacaoDAO.php';
 
   class AnuncioController {
     
@@ -21,7 +22,7 @@
         throw $erro;
     }
     }
-    public static function listarTodos ($categoria = "") {
+    public static function listarTodos () {
       try {
         
         $anuncioDAO = new AnuncioDAO();
@@ -37,9 +38,9 @@
       try {
         
         $anuncioDAO = new AnuncioDAO();
-        $anuncio = $anuncioDAO->anuncioPorId($id);
+        $anuncios = $anuncioDAO->anuncioPorId($id);
 
-        return $anuncio;
+        return $anuncios;
       } catch (PDOException $erro) {
           throw $erro;
       }
@@ -48,9 +49,18 @@
       try {
         
         $anuncioDAO = new AnuncioDAO();
-        $listaCompleta = $anuncioDAO->anuncioPorId($categoria);
+        $listaCompleta = $anuncioDAO->anuncioPorCategoria($categoria);
 
         return $listaCompleta;
+      } catch (PDOException $erro) {
+          throw $erro;
+      }
+    }
+    public static function finalizarAnuncio ($id) {
+      try {
+        
+        $anuncioDAO = new AnuncioDAO();
+        $anuncioDAO->finalizarAnuncio($id);
       } catch (PDOException $erro) {
           throw $erro;
       }
